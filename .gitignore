@@ -117,3 +117,6 @@ typings/
 .dynamodb/
 
 # End of https://www.gitignore.io/api/node
+
+# Google SDK
+client/new-better-translator-abce3538eea6.json
