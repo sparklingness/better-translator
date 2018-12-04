@@ -6,13 +6,13 @@
   "scripts": {
     "start": "nodemon app.js",
     "heroku-postbuild": "cd client && npm install && npm run build",
+    "preinstall": "node preinstall.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tkhwang/better-translator.git"
   },
-  "preinstall": "node preinstall.js",
   "keywords": [],
   "author": "",
   "license": "ISC",
