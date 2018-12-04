@@ -4,7 +4,7 @@
   "description": "making better translator on a special domain",
   "main": "index.js",
   "scripts": {
-    "start": "export GOOGLE_APPLICATION_CREDENTIALS='./new-better-translator-e41564ece59b.json' && nodemon app.js",
+    "start": "nodemon app.js",
     "heroku-postbuild": "cd client && npm install && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
