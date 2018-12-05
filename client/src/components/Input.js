@@ -121,14 +121,14 @@ class Input extends React.Component {
         </div>
         <div id="buttons">
           <button
-            id="btn btn-translate"
+            id="btn-translate"
             onClick={this.handleTranslate}
             className="btn btn-raised btn-success"
           >
             Translate
           </button>
           <button
-            id="btn btn-clear"
+            id="btn-clear"
             onClick={this.handleClear}
             className="btn btn-raised btn-secondary"
           >
