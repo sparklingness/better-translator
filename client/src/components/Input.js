@@ -10,7 +10,9 @@ class Input extends React.Component {
       textBeforeOrg: "",
       textBeforeEnh: "",
       textAfterGoogleOrg: "",
-      textAfterEnh: ""
+      textAfterGoogleEnh: "",
+      textAfterPapagoOrg: "",
+      textAfterPapagoEnh: ""
     };
 
     this.handleTranslate = this.handleTranslate.bind(this);
@@ -57,8 +59,16 @@ class Input extends React.Component {
       ])
       .then(
         axios.spread((respGoogle, respPapago) => {
-          console.log("[+] axios.all :", respGoogle);
-          console.log("[+] axios.all  :", respPapago);
+          console.log("[+] axios.all - Google :", respGoogle.data);
+          console.log(
+            "[+] axios.all - Papago:",
+            respPapago.data.message.result.translatedText
+          );
+          this.setState({
+            ...this.state,
+            textAfterGoogleOrg: respGoogle.data,
+            textAfterPapagoOrg: respPapago.data.message.result.translatedText
+          });
         })
       )
       .catch(err => new Error(err));
@@ -120,7 +130,9 @@ class Input extends React.Component {
       textBeforeOrg: "",
       textBeforeEnh: "",
       textAfterGoogleOrg: "",
-      textAfterEnh: ""
+      textAfterGoogleEnh: "",
+      textAfterPapagoOrg: "",
+      textAfterPapagoEnh: ""
     });
   }
 
@@ -145,6 +157,22 @@ class Input extends React.Component {
             rows="10"
             value={this.state.textBeforeEnh}
           />
+        </div>
+        <div id="buttons">
+          <button
+            id="btn btn-translate"
+            onClick={this.handleTranslate}
+            className="btn btn-raised btn-success"
+          >
+            Translate
+          </button>
+          <button
+            id="btn btn-clear"
+            onClick={this.handleClear}
+            className="btn btn-raised btn-secondary"
+          >
+            Clear
+          </button>
         </div>
         <div id="text-google">
           <h2>Google Tranlation API</h2>
@@ -180,24 +208,6 @@ class Input extends React.Component {
             value={this.state.textAfterPapagoEnh}
           />
         </div>
-        <div>
-          {/* <div id="text-before-enh"> {this.state.textBeforeEnh} </div> */}
-        </div>
-        <div />
-        <button
-          id="btn btn-translate"
-          onClick={this.handleTranslate}
-          className="btn btn-raised btn-success"
-        >
-          Translate
-        </button>
-        <button
-          id="btn btn-clear"
-          onClick={this.handleClear}
-          className="btn btn-raised btn-secondary"
-        >
-          Clear
-        </button>
       </div>
     );
   }

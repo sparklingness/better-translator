@@ -6,3 +6,15 @@
 h2 {
   font-family: 'Open Sans Condensed', sans-serif;
 }
+
+#buttons {
+  margin: 5px;
+}
+
+button {
+  margin: 5px;
+}
+
+textarea {
+  margin: 10px;
+}
