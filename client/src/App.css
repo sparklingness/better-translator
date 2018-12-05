@@ -40,3 +40,7 @@ textarea {
   font-family: 'Noto Sans KR', sans-serif;
   font-size: medium;
 }
+
+#text-after-org {
+  backgroundImage: "https://images.g2crowd.com/uploads/product/image/large_detail/large_detail_1520365957/google-cloud-translation-api.png"
+}
