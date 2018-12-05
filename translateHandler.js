@@ -1,5 +1,7 @@
+const axios = require("axios");
 // Imports the Google Cloud client library
 const { Translate } = require("@google-cloud/translate");
+require("dotenv").config();
 
 const handler = (req, res) => {
   const projectId = "new-better-trans-1543908842418";
@@ -7,22 +9,48 @@ const handler = (req, res) => {
     projectId: projectId
   });
 
-  const text = req.body.text;
-  const target = req.body.target;
+  const { type, text, target } = req.body;
 
-  translate
-    .translate(text, target)
-    .then(results => {
-      const translation = results[0];
+  if (type === "GOOGLE") {
+    translate
+      .translate(text, target)
+      .then(results => {
+        const translation = results[0];
 
-      // console.log(`Text: ${text}`);
-      // console.log(`Translation: ${translation}`);
+        console.log(`Text: ${text}`);
+        console.log(`Translation: ${translation}`);
 
-      res.end(translation);
+        res.end(translation);
+      })
+      .catch(err => {
+        console.log(new Error(err));
+      });
+  } else if (type === "PAPAGO") {
+    console.log("[+] PAPAGO :", process.env.PAPAGO_CLIENT_ID);
+    console.log("[+] PAPAGO :", process.env.PAPAGO_CLIENT_SECRET);
+
+    axios({
+      url: "https://openapi.naver.com/v1/papago/n2mt",
+      method: "post",
+      data: {
+        source: "en",
+        target: target,
+        text: text
+      },
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+        "X-Naver-Client-Id": process.env.PAPAGO_CLIENT_ID,
+        "X-Naver-Client-Secret": process.env.PAPAGO_CLIENT_SECRET
+      }
     })
-    .catch(err => {
-      console.log(new Error(err));
-    });
+      .then(results => {
+        console.log(results);
+      })
+      .catch(err => {
+        console.log(new Error(err));
+        res.status(400).send(err);
+      });
+  }
 };
 
 module.exports = handler;

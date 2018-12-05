@@ -9,7 +9,7 @@ class Input extends React.Component {
     this.state = {
       textBeforeOrg: "",
       textBeforeEnh: "",
-      textAfterOrg: "",
+      textAfterGoogleOrg: "",
       textAfterEnh: ""
     };
 
@@ -21,15 +21,54 @@ class Input extends React.Component {
 
   componentDidMount() {}
 
+  translateGoogle = (text, target) => {
+    return axios({
+      url: "/translate",
+      method: "post",
+      data: {
+        type: "GOOGLE",
+        text: text,
+        target: target
+      }
+    });
+  };
+
+  translatePapago = (text, target) => {
+    return axios({
+      url: "/translate",
+      method: "post",
+      data: {
+        type: "PAPAGO",
+        text: text,
+        target: target
+      }
+    });
+  };
+
   handleTranslate() {
     let text = document.getElementById("text-before-org").value;
     let result;
     const target = "ko";
 
+    axios
+      .all([
+        this.translateGoogle(text, target),
+        this.translatePapago(text, target)
+      ])
+      .then(
+        axios.spread((respGoogle, respPapago) => {
+          console.log("[+] axios.all :", respGoogle);
+          console.log("[+] axios.all  :", respPapago);
+        })
+      )
+      .catch(err => new Error(err));
+
+    /*
     axios({
       url: "/translate",
       method: "post",
       data: {
+        type: "GOOGLE",
         text: text, // document.getElementById("text-before").value,
         target: target
       }
@@ -39,12 +78,29 @@ class Input extends React.Component {
 
         this.setState({
           ...this.state,
-          textAfterOrg: results.data
+          textAfterGoogleOrg: results.data
         });
       })
       .catch(err => {
         console.error("ERROR:", err);
       });
+    
+    axios({
+      url: "/translate",
+      method: "post",
+      data: {
+        type: "PAPAGO",
+        text: text,
+        target: target
+      }
+    })
+      .then(results => {
+        console.log("[+] Papago : ", results);
+      })
+      .catch(err => {
+        console.log(new Error(err));
+      });
+      */
   }
 
   handleInputText() {
@@ -63,7 +119,7 @@ class Input extends React.Component {
       ...this.state,
       textBeforeOrg: "",
       textBeforeEnh: "",
-      textAfterOrg: "",
+      textAfterGoogleOrg: "",
       textAfterEnh: ""
     });
   }
@@ -71,42 +127,63 @@ class Input extends React.Component {
   render() {
     return (
       <div id="input-container">
-        <div>
+        <div id="text-input">
+          <h2>Input</h2>
           <textarea
             onChange={this.handleInputText}
             name="text-before-org"
             id="text-before-org"
-            cols="70"
-            rows="15"
+            cols="50"
+            rows="10"
             value={this.state.textBeforeOrg}
           />
-          <textarea
-            name="text-after-org"
-            id="text-after-org"
-            cols="70"
-            rows="15"
-            value={this.state.textAfterOrg}
-          />
-
-          <div id="text-before-enh"> {this.state.textBeforeEnh} </div>
-        </div>
-        <div>
           <textarea
             onChange={this.handleInputText}
             name="text-before-enh"
             id="text-before-enh"
-            cols="70"
-            rows="15"
+            cols="50"
+            rows="10"
             value={this.state.textBeforeEnh}
           />
+        </div>
+        <div id="text-google">
+          <h2>Google Tranlation API</h2>
           <textarea
-            name="text-after-enh"
-            id="text-after-enh"
-            cols="70"
-            rows="15"
-            value={this.state.textAfterEnh}
+            name="text-after-google-org"
+            id="text-after-google-org"
+            cols="50"
+            rows="10"
+            value={this.state.textAfterGoogleOrg}
+          />
+          <textarea
+            name="text-after-google-enh"
+            id="text-after-google-enh"
+            cols="50"
+            rows="10"
+            value={this.state.textAfterGoogleEnh}
           />
         </div>
+        <div id="text-papago">
+          <h2>Naver Papago API</h2>
+          <textarea
+            name="text-after-papago-org"
+            id="text-after-papago-org"
+            cols="50"
+            rows="10"
+            value={this.state.textAfterPapagoOrg}
+          />
+          <textarea
+            name="text-after-papago-enh"
+            id="text-after-papago-enh"
+            cols="50"
+            rows="10"
+            value={this.state.textAfterPapagoEnh}
+          />
+        </div>
+        <div>
+          {/* <div id="text-before-enh"> {this.state.textBeforeEnh} </div> */}
+        </div>
+        <div />
         <button
           id="btn btn-translate"
           onClick={this.handleTranslate}

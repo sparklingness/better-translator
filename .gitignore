@@ -120,3 +120,6 @@ typings/
 
 # Google SDK
 client/new-better-translator-abce3538eea6.json
+
+.env
+env.sh
