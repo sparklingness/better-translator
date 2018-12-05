@@ -72,45 +72,6 @@ class Input extends React.Component {
         })
       )
       .catch(err => new Error(err));
-
-    /*
-    axios({
-      url: "/translate",
-      method: "post",
-      data: {
-        type: "GOOGLE",
-        text: text, // document.getElementById("text-before").value,
-        target: target
-      }
-    })
-      .then(results => {
-        console.log(results);
-
-        this.setState({
-          ...this.state,
-          textAfterGoogleOrg: results.data
-        });
-      })
-      .catch(err => {
-        console.error("ERROR:", err);
-      });
-    
-    axios({
-      url: "/translate",
-      method: "post",
-      data: {
-        type: "PAPAGO",
-        text: text,
-        target: target
-      }
-    })
-      .then(results => {
-        console.log("[+] Papago : ", results);
-      })
-      .catch(err => {
-        console.log(new Error(err));
-      });
-      */
   }
 
   handleInputText() {
