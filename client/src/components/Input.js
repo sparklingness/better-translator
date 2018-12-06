@@ -116,7 +116,7 @@ class Input extends React.Component {
     return (
       <div id="input-container">
         <div id="text-input">
-          <h2>Input</h2>
+          <h2>Original text</h2>
           <textarea
             onChange={this.handleInputText}
             name="text-before-org"
