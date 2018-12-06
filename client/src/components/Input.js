@@ -126,20 +126,21 @@ class Input extends React.Component {
 
   handleSelectWord(e) {
     e.persist();
+
     let selectedWord = e.target;
+    console.log(e);
 
     const CLASS_WORD_SELECTED = "notranslate";
+    const hasClass = selectedWord.classList.contains(CLASS_WORD_SELECTED);
 
-    if (selectedWord.className !== CLASS_WORD_SELECTED) {
-      selectedWord.className = CLASS_WORD_SELECTED;
+    if (hasClass) {
+      selectedWord.classList.remove(CLASS_WORD_SELECTED);
+      selectedWord.textContent = selectedWord.textContent.replace(/"/g, "");
+    } else {
+      selectedWord.classList.add(CLASS_WORD_SELECTED);
       const oldText = selectedWord.textContent;
       selectedWord.textContent = `"${oldText}"`;
-    } else {
-      selectedWord.className = "";
-      selectedWord.textContent = selectedWord.textContent.replace(/"/g, "");
     }
-
-    console.log(e);
   }
 
   handleEnhancedTranslate() {}
