@@ -114,7 +114,11 @@ class Input extends React.Component {
     e.persist();
     let selectedWord = e.target;
 
-    selectedWord.style.color = "red";
+    if (selectedWord.style.color === "red") {
+      selectedWord.style.color = "";
+    } else {
+      selectedWord.style.color = "red";
+    }
 
     console.log("[+] handleSelectWord :", e);
     console.log("[+] handleSelectWord :", e.target.value);
