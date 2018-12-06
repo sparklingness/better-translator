@@ -26,3 +26,8 @@ textarea {
   margin-left: 5px;
   margin-right: 5px;
 }
+
+.col-centered {
+  float: none;
+  margin: 0 auto;
+}

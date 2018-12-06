@@ -150,44 +150,56 @@ class Input extends React.Component {
             Clear
           </button>
         </div>
-        <h2>Google Tranlation API</h2>
-        <div id="text-google">
-          {this.state.isTranslating ? (
-            <Spinner type="bars" color="cyan" />
-          ) : (
-            <textarea
-              name="text-after-google-org"
-              id="text-after-google-org"
-              cols="50"
-              rows="10"
-              value={this.state.textAfterGoogleOrg}
-            />
-          )}
-          <textarea
-            name="text-after-google-enh"
-            id="text-after-google-enh"
-            cols="50"
-            rows="10"
-            value={this.state.textAfterGoogleEnh}
-          />
-        </div>
-        <div id="text-papago">
-          <h2>Naver Papago API</h2>
-          <textarea
-            name="text-after-papago-org"
-            id="text-after-papago-org"
-            cols="50"
-            rows="10"
-            value={this.state.textAfterPapagoOrg}
-          />
-          <textarea
-            name="text-after-papago-enh"
-            id="text-after-papago-enh"
-            cols="50"
-            rows="10"
-            value={this.state.textAfterPapagoEnh}
-          />
-        </div>
+        {this.state.isTranslating ? (
+          <div class="row">
+            <div class="col-lg-1 col-centered">
+              <Spinner
+                type="balls"
+                color="cyan"
+                height="100px"
+                width="100px"
+                id="spinner-translate"
+              />
+            </div>
+          </div>
+        ) : (
+          <div id="text-after">
+            <h2>Google Tranlation API</h2>
+            <div id="text-google">
+              <textarea
+                name="text-after-google-org"
+                id="text-after-google-org"
+                cols="50"
+                rows="10"
+                value={this.state.textAfterGoogleOrg}
+              />
+              <textarea
+                name="text-after-google-enh"
+                id="text-after-google-enh"
+                cols="50"
+                rows="10"
+                value={this.state.textAfterGoogleEnh}
+              />
+            </div>
+            <div id="text-papago">
+              <h2>Naver Papago API</h2>
+              <textarea
+                name="text-after-papago-org"
+                id="text-after-papago-org"
+                cols="50"
+                rows="10"
+                value={this.state.textAfterPapagoOrg}
+              />
+              <textarea
+                name="text-after-papago-enh"
+                id="text-after-papago-enh"
+                cols="50"
+                rows="10"
+                value={this.state.textAfterPapagoEnh}
+              />
+            </div>
+          </div>
+        )}
       </div>
     );
   }
