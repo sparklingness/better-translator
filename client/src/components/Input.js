@@ -61,26 +61,32 @@ class Input extends React.Component {
 
     axios
       .all([
-        this.translateGoogle(text, target)
-        // this.translatePapago(text, target)
+        this.translateGoogle(text, target),
+        this.translatePapago(text, target)
       ])
       .then(
-        // axios.spread((respGoogle, respPapago) => {
-        axios.spread(respGoogle => {
+        axios.spread((respGoogle, respPapago) => {
+          // axios.spread(respGoogle => {
           console.log("[+] axios.all - Google :", respGoogle.data);
           console.log(
-            "[+] axios.all - Papago:"
-            // respPapago.data.message.result.translatedText
+            "[+] axios.all - Papago:",
+            respPapago.data.message.result.translatedText
           );
           this.setState({
             ...this.state,
-            isTranslating: false,
-            textAfterGoogleOrg: respGoogle.data
-            // textAfterPapagoOrg: respPapago.data.message.result.translatedText
+            textAfterGoogleOrg: respGoogle.data,
+            textAfterPapagoOrg: respPapago.data.message.result.translatedText
+          });
+
+          this.setState({
+            ...this.state,
+            isTranslating: false
           });
         })
       )
-      .catch(err => new Error(err));
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   handleInputText() {

@@ -26,6 +26,7 @@ const handler = (req, res) => {
       })
       .catch(err => {
         console.log(new Error(err));
+        res.end(new Error(err));
       });
   } else if (type === "PAPAGO") {
     console.log("[+] PAPAGO :", process.env.PAPAGO_CLIENT_ID);
@@ -47,12 +48,18 @@ const handler = (req, res) => {
     })
       .then(results => {
         console.log(results.data);
-        // res.end(results.data);
         res.end(JSON.stringify(results.data));
       })
       .catch(err => {
         console.log(new Error(err));
-        res.status(400).send(err);
+        // res.status(400).send(err);
+        res.end(
+          JSON.stringify({
+            message: {
+              result: { translatedText: "PAPAGO API daily usage exceeds." }
+            }
+          })
+        );
       });
   }
 };
