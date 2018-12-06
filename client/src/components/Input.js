@@ -145,6 +145,9 @@ class Input extends React.Component {
   handleEnhancedTranslate() {}
 
   handleClear() {
+    let textEnh = document.getElementById("text-before-enh");
+    textEnh.innerHTML = "";
+
     this.setState({
       ...this.state,
       isTranslating: false,
