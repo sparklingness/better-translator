@@ -53,9 +53,24 @@ class Input extends React.Component {
   };
 
   handleTranslate() {
-    let text = document.getElementById("text-before-org").value;
-    let result;
+    const HTML_TEMPLATE_FIRST = `
+    <!DOCTYPE html>
+<html>
+<body>
+`;
+    const HTML_TEMPLATE_LAST = `
+</body>
+</html>
+    `;
+
     const target = "ko";
+    const textOrg = document.getElementById("text-before-org").value;
+    const textEnh = document.getElementById("text-before-enh").innerText;
+
+    // const textForGoogleEnh = `${HTML_TEMPLATE_FIRST}
+    // ${textEnh}
+    // ${HTML_TEMPLATE_LAST}
+    // `;
 
     this.setState({
       ...this.state,
@@ -64,28 +79,27 @@ class Input extends React.Component {
 
     axios
       .all([
-        this.translateGoogle(text, target),
-        this.translatePapago(text, target)
+        this.translateGoogle(textOrg, target),
+        this.translateGoogle(textEnh, target),
+        this.translatePapago(textOrg, target)
       ])
       .then(
-        axios.spread((respGoogle, respPapago) => {
-          // axios.spread(respGoogle => {
-          console.log("[+] axios.all - Google :", respGoogle.data);
+        axios.spread((respGoogleOrg, respGoogleEnh, respPapagoOrg) => {
+          // axios.spread(respGoogleOrg => {
+          console.log("[+] axios.all - Google :", respGoogleOrg.data);
           console.log(
             "[+] axios.all - Papago:",
-            respPapago.data.message.result.translatedText
+            respPapagoOrg.data.message.result.translatedText
           );
           this.setState({
             ...this.state,
             isTranslated: true,
-            textAfterGoogleOrg: respGoogle.data,
-            textAfterPapagoOrg: respPapago.data.message.result.translatedText
+            textAfterGoogleOrg: respGoogleOrg.data,
+            textAfterGoogleEnh: respGoogleEnh.data,
+            textAfterPapagoOrg: respPapagoOrg.data.message.result.translatedText
           });
 
-          this.setState({
-            ...this.state,
-            isTranslating: false
-          });
+          this.setState({ ...this.state, isTranslating: false });
         })
       )
       .catch(err => {
@@ -114,14 +128,18 @@ class Input extends React.Component {
     e.persist();
     let selectedWord = e.target;
 
-    if (selectedWord.style.color === "red") {
-      selectedWord.style.color = "";
+    const CLASS_WORD_SELECTED = "notranslate";
+
+    if (selectedWord.className !== CLASS_WORD_SELECTED) {
+      selectedWord.className = CLASS_WORD_SELECTED;
+      const oldText = selectedWord.textContent;
+      selectedWord.textContent = `"${oldText}"`;
     } else {
-      selectedWord.style.color = "red";
+      selectedWord.className = "";
+      selectedWord.textContent = selectedWord.textContent.replace(/"/g, "");
     }
 
-    console.log("[+] handleSelectWord :", e);
-    console.log("[+] handleSelectWord :", e.target.value);
+    console.log(e);
   }
 
   handleEnhancedTranslate() {}
