@@ -31,3 +31,18 @@ textarea {
   float: none;
   margin: 0 auto;
 }
+
+.boxed {
+  border: 1px solid black;
+}
+
+.word-selected {
+  color: red;
+}
+
+#text-before-enh {
+  width: 1000px;
+  background-color: #d2f3f7;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}

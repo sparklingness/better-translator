@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import axios from "axios";
 import "./Input.css";
 import Spinner from "./Spinner";
+import { runInThisContext } from "vm";
 
 class Input extends React.Component {
   constructor(props) {
@@ -22,6 +23,7 @@ class Input extends React.Component {
     this.handleInputText = this.handleInputText.bind(this);
     this.handleEnhancedTranslate = this.handleEnhancedTranslate.bind(this);
     this.handleClear = this.handleClear.bind(this);
+    this.handleSelectWord = this.handleSelectWord.bind(this);
   }
 
   componentDidMount() {}
@@ -93,11 +95,29 @@ class Input extends React.Component {
 
   handleInputText() {
     let text = document.getElementById("text-before-org").value;
+    let spanAddedText = text
+      .split(" ")
+      .map(v => `<span>${v}</span>`)
+      .join(" ");
+
+    let textEnh = document.getElementById("text-before-enh");
+    textEnh.innerHTML = spanAddedText;
 
     this.setState({
       ...this.state,
-      textBeforeOrg: text
+      textBeforeOrg: text,
+      textBeforeEnh: spanAddedText
     });
+  }
+
+  handleSelectWord(e) {
+    e.persist();
+    let selectedWord = e.target;
+
+    selectedWord.style.color = "red";
+
+    console.log("[+] handleSelectWord :", e);
+    console.log("[+] handleSelectWord :", e.target.value);
   }
 
   handleEnhancedTranslate() {}
@@ -129,14 +149,14 @@ class Input extends React.Component {
             rows="10"
             value={this.state.textBeforeOrg}
           />
-          <textarea
-            onChange={this.handleInputText}
-            name="text-before-enh"
-            id="text-before-enh"
-            cols="50"
-            rows="10"
-            value={this.state.textBeforeEnh}
-          />
+          <div class="row">
+            <div
+              id="text-before-enh"
+              className="boxed col-centered"
+              width="100"
+              onClick={this.handleSelectWord}
+            />
+          </div>
         </div>
         <div id="buttons">
           <button
