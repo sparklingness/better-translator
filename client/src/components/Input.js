@@ -2,11 +2,13 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
 import "./Input.css";
+import Spinner from "./Spinner";
 
 class Input extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isTranslating: false,
       textBeforeOrg: "",
       textBeforeEnh: "",
       textAfterGoogleOrg: "",
@@ -52,22 +54,29 @@ class Input extends React.Component {
     let result;
     const target = "ko";
 
+    this.setState({
+      ...this.state,
+      isTranslating: true
+    });
+
     axios
       .all([
-        this.translateGoogle(text, target),
-        this.translatePapago(text, target)
+        this.translateGoogle(text, target)
+        // this.translatePapago(text, target)
       ])
       .then(
-        axios.spread((respGoogle, respPapago) => {
+        // axios.spread((respGoogle, respPapago) => {
+        axios.spread(respGoogle => {
           console.log("[+] axios.all - Google :", respGoogle.data);
           console.log(
-            "[+] axios.all - Papago:",
-            respPapago.data.message.result.translatedText
+            "[+] axios.all - Papago:"
+            // respPapago.data.message.result.translatedText
           );
           this.setState({
             ...this.state,
-            textAfterGoogleOrg: respGoogle.data,
-            textAfterPapagoOrg: respPapago.data.message.result.translatedText
+            isTranslating: false,
+            textAfterGoogleOrg: respGoogle.data
+            // textAfterPapagoOrg: respPapago.data.message.result.translatedText
           });
         })
       )
@@ -135,15 +144,19 @@ class Input extends React.Component {
             Clear
           </button>
         </div>
+        <h2>Google Tranlation API</h2>
         <div id="text-google">
-          <h2>Google Tranlation API</h2>
-          <textarea
-            name="text-after-google-org"
-            id="text-after-google-org"
-            cols="50"
-            rows="10"
-            value={this.state.textAfterGoogleOrg}
-          />
+          {this.state.isTranslating ? (
+            <Spinner type="bars" color="cyan" />
+          ) : (
+            <textarea
+              name="text-after-google-org"
+              id="text-after-google-org"
+              cols="50"
+              rows="10"
+              value={this.state.textAfterGoogleOrg}
+            />
+          )}
           <textarea
             name="text-after-google-enh"
             id="text-after-google-enh"
