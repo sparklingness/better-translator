@@ -1,0 +1,33 @@
+{
+  "name": "better-translator",
+  "version": "1.0.0",
+  "description": "making better translator on a special domain",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "heroku-postbuild": "cd client && npm install && npm run build",
+    "preinstall": "node preinstall.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tkhwang/better-translator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tkhwang/better-translator/issues"
+  },
+  "homepage": "https://github.com/tkhwang/better-translator#readme",
+  "dependencies": {
+    "@google-cloud/translate": "^2.1.2",
+    "axios": "^0.18.0",
+    "config": "^3.0.0",
+    "dotenv": "^6.1.0",
+    "express": "^4.16.4",
+    "helmet": "^3.15.0",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.18.7"
+  }
+}

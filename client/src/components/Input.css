@@ -1,0 +1,50 @@
+#text-after-google-org {
+  /* background-image: url('https://images.g2crowd.com/uploads/product/image/large_detail/large_detail_1520365957/google-cloud-translation-api.png'); */
+  background-repeat: no-repeat;
+}
+
+h2 {
+  font-family: 'Open Sans Condensed', sans-serif;
+}
+
+#buttons {
+  /* margin: 5px; */
+}
+
+#btn-translate {
+  margin-top: 5px;
+  margin-right: 15px;
+  /* padding-right: 35px; */
+}
+
+#btn-clear {
+  margin-top: 5px;
+  margin-left: -5px;
+}
+
+textarea {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.col-centered {
+  float: none;
+  margin: 0 auto;
+}
+
+.boxed {
+  border: 1px solid black;
+}
+
+.notranslate {
+  border: 5px;
+  color: #d63031;
+  transition: color 0.5s ease-in-out;
+}
+
+#text-before-enh {
+  width: 1000px;
+  background-color: #c8f8f8;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
